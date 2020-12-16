@@ -30,7 +30,7 @@ resource "aws_security_group" "jumphost" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["11.0.0.0/8"]
   }
 
   # outbound internet access
