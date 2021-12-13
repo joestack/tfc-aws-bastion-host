@@ -6,8 +6,8 @@ provider "aws" {
 
 resource "aws_instance" "jumphost" {
   ami                         = data.aws_ami.ubuntu.id
-  #instance_type               = var.instance_type
-  instance_type               = "t2.large"
+  instance_type               = var.instance_type
+  #instance_type               = "t2.large"
   availability_zone           = "${var.aws_region}a"
   subnet_id                   = aws_subnet.dmz_subnet.id
   private_ip                  = "192.168.1.100"
