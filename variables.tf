@@ -10,10 +10,11 @@ variable "instance_type" {
 
 variable "name" {
   description = "name to pass to Name tag"
-  default     = "PROD"
+  default     = "TFC_Hello_World_01-demo"
 }
 
 variable "key_name" {
+  description = "Name of the public key that is already available within the AWS region"
   default = "joestack"
 }
 

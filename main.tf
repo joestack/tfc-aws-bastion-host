@@ -2,12 +2,28 @@ provider "aws" {
   region = var.aws_region
 }
 
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["099720109477"] # Canonical
+}
+
+data "aws_availability_zones" "available" {
+}
+
+
 # INSTANCES #
 
 resource "aws_instance" "jumphost" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
-  #instance_type               = "t2.large"
   availability_zone           = "${var.aws_region}a"
   subnet_id                   = aws_subnet.dmz_subnet.id
   private_ip                  = "192.168.1.100"
@@ -31,7 +47,7 @@ resource "aws_security_group" "jumphost" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
+    cidr_blocks = ["0.0.0.0/8"]
   }
 
   # outbound internet access
